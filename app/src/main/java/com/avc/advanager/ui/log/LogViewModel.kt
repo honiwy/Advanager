@@ -1,13 +1,13 @@
-package com.avc.advanager.ui.dashboard
+package com.avc.advanager.ui.log
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class DashboardViewModel : ViewModel() {
+class LogViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
+        value = "This is log Fragment"
     }
     val text: LiveData<String> = _text
 }

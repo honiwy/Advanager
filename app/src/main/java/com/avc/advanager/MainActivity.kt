@@ -1,35 +1,74 @@
 package com.avc.advanager
 
+import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.avc.advanager.databinding.ActivityMainBinding
+import com.avc.advanager.extension.getVmFactory
+import com.avc.advanager.util.CurrentFragmentType
 
 class MainActivity : AppCompatActivity() {
 
+    val viewModel by viewModels<MainViewModel> { getVmFactory() }
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+        binding.navView.setOnItemSelectedListener{ item ->
+            when (item.itemId) {
+                R.id.navigation_stream -> {
+                    findNavController(R.id.nav_host).navigate(
+                        NavigationDirections.navigateToStreamFragment(
 
-        val navView: BottomNavigationView = binding.navView
+                        )
+                    )
+                    return@setOnItemSelectedListener true
+                }
+                R.id.navigation_log -> {
+                    findNavController(R.id.nav_host).navigate(
+                        NavigationDirections.navigateToLogFragment(
+                        )
+                    )
+                    return@setOnItemSelectedListener true
+                }
+                R.id.navigation_notifications -> {
+                    findNavController(R.id.nav_host).navigate(
+                        NavigationDirections.navigateToNotificationsFragment(
+                        )
+                    )
+                    return@setOnItemSelectedListener true
+                }
+            }
+            false
+        }
 
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
-            )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+        setupNavController()
+    }
+
+    private fun setupNavController() {
+        findNavController(R.id.nav_host).addOnDestinationChangedListener { navController: NavController, _: NavDestination, _: Bundle? ->
+            viewModel.currentFragmentType.value = when (navController.currentDestination?.id) {
+                R.id.streamFragment -> CurrentFragmentType.STREAM
+                R.id.logFragment -> CurrentFragmentType.LOG
+                R.id.notificationsFragment -> CurrentFragmentType.NOTIFICATION
+                R.id.deviceSearchFragment -> CurrentFragmentType.DEVICESEARCH
+                else -> viewModel.currentFragmentType.value
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.d("Main Activity", "onActivityResult: ")
     }
 }

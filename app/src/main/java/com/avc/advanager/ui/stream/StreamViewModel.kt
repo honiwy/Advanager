@@ -1,13 +1,13 @@
-package com.avc.advanager.ui.home
+package com.avc.advanager.ui.stream
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class HomeViewModel : ViewModel() {
+class StreamViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+        value = "This is stream Fragment"
     }
     val text: LiveData<String> = _text
 }

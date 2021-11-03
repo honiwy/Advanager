@@ -1,4 +1,4 @@
-package com.avc.advanager.ui.home
+package com.avc.advanager.ui.stream
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,13 +8,12 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.avc.advanager.R
-import com.avc.advanager.databinding.FragmentHomeBinding
+import com.avc.advanager.databinding.FragmentStreamBinding
 
-class HomeFragment : Fragment() {
+class StreamFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
-    private var _binding: FragmentHomeBinding? = null
+    private lateinit var streamViewModel: StreamViewModel
+    private var _binding: FragmentStreamBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -25,14 +24,14 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+        streamViewModel =
+            ViewModelProvider(this).get(StreamViewModel::class.java)
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentStreamBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
+        val textView: TextView = binding.textStream
+        streamViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root

@@ -1,4 +1,4 @@
-package com.avc.advanager.ui.dashboard
+package com.avc.advanager.ui.log
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,13 +8,12 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.avc.advanager.R
-import com.avc.advanager.databinding.FragmentDashboardBinding
+import com.avc.advanager.databinding.FragmentLogBinding
 
-class DashboardFragment : Fragment() {
+class LogFragment : Fragment() {
 
-    private lateinit var dashboardViewModel: DashboardViewModel
-    private var _binding: FragmentDashboardBinding? = null
+    private lateinit var logViewModel: LogViewModel
+    private var _binding: FragmentLogBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -25,14 +24,14 @@ class DashboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
+        logViewModel =
+            ViewModelProvider(this).get(LogViewModel::class.java)
 
-        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
+        _binding = FragmentLogBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
+        val textView: TextView = binding.textLog
+        logViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
