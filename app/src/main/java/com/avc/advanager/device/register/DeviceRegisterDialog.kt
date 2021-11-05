@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import com.avc.advanager.R
 import com.avc.advanager.databinding.DialogRegisterBinding
 import com.avc.advanager.extension.getVmFactory
+import androidx.lifecycle.Observer
 
 class DeviceRegisterDialog : DialogFragment() {
 
@@ -25,6 +26,19 @@ class DeviceRegisterDialog : DialogFragment() {
         binding.viewModel = viewModel
 
         binding.buttonClose.setOnClickListener {
+            dismiss()
+        }
+
+        viewModel.password.observe(this, Observer {
+            viewModel.checkPasswordLegal()
+        })
+
+        viewModel.repeatedPassword.observe(this, Observer {
+            viewModel.checkPasswordConsistent()
+        })
+
+        binding.buttonRegisterIp.setOnClickListener {
+            viewModel.register()
             dismiss()
         }
 

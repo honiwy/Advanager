@@ -41,4 +41,13 @@
         app:popUpTo="@id/navigation" app:popUpToInclusive="true"/>
     <action android:id="@+id/navigate_to_notificationsFragment" app:destination="@id/notificationsFragment"
         app:popUpTo="@id/navigation" app:popUpToInclusive="true"/>
+
+    <dialog
+        android:id="@+id/deviceRegisterDialog"
+        android:name="com.avc.advanager.device.register.DeviceRegisterDialog"
+        android:label="DeviceRegisterDialog" />
+    <dialog
+        android:id="@+id/deviceLoginDialog"
+        android:name="com.avc.advanager.device.login.DeviceLoginDialog"
+        android:label="DeviceLoginDialog" />
 </navigation>

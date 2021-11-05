@@ -7,5 +7,6 @@
     <color name="cream_yellow">#f7d6bf</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="dark_red">#9E1A1A</color>
     <color name="translucent_80">#cc000000</color>
 </resources>

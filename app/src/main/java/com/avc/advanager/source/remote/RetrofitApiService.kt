@@ -1,6 +1,8 @@
 package com.avc.advanager.source.remote
 
+import com.avc.advanager.data.RegisterInfo
 import com.avc.advanager.response.DeviceInitialResponse
+import com.avc.advanager.response.RegisterUserResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -9,6 +11,8 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.http.Body
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
@@ -55,7 +59,7 @@ interface RetrofitApiService {
 
     @POST("users/initial")
     @Headers("Content-Type: application/json")
-    fun postUserInitiate(
+    fun postDeviceInitiate(
     ): Deferred<DeviceInitialResponse>
 
 //    //HOME
@@ -75,12 +79,11 @@ interface RetrofitApiService {
 //    @Headers("Content-Type: application/json;charset=UTF-8")
 //    fun getUserInfo(@Header("Authorization") string: String): Deferred<UserProfile>
 //
-//    @POST("user/signin")
-//    @FormUrlEncoded//就不需要 @Header("Content-Type") type: String = "application/json",
-//    fun postLoginInfo(
-//        @Field("provider") provider: String = "facebook",
-//        @Field("access_token") accessToken: String
-//    ): Deferred<SignInResponse>
+    @POST("users/register")
+    @Headers("Content-Type: application/json")
+    fun postUserRegister(
+    @Body registerInfo: RegisterInfo
+    ): Deferred<RegisterUserResponse>
 //
 //    @POST("order/checkout")
 //    @Headers("Content-Type: application/json")

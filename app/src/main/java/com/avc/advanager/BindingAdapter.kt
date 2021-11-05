@@ -45,7 +45,7 @@ fun bindRecyclerViewWithIPItems(recyclerView: RecyclerView, ipItems: List<String
 }
 
 /**
- * According to [LoadStatus] to decide the visibility of [ProgressBar]
+ * Decide the visibility of [ProgressBar] according to [LoadStatus]
  */
 @BindingAdapter("setupApiStatus")
 fun bindApiStatus(view: ProgressBar, status: LoadStatus?) {
@@ -56,10 +56,10 @@ fun bindApiStatus(view: ProgressBar, status: LoadStatus?) {
 }
 
 /**
- * According to [message] to decide the visibility of [errorText]
+ * Decide the visibility of [errorText] according to [message]
  */
-@BindingAdapter("setupApiErrorMessage")
-fun bindApiErrorMessage(errorText: TextView, message: String?) {
+@BindingAdapter("setupErrorMessage")
+fun bindErrorMessage(errorText: TextView, message: String?) {
     when (message) {
         null, "" -> {
             errorText.visibility = View.GONE

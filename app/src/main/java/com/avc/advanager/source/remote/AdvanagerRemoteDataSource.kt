@@ -1,8 +1,10 @@
 package com.avc.advanager.source.remote
 
 import com.avc.advanager.R
+import com.avc.advanager.data.RegisterInfo
 import com.avc.advanager.data.Result
 import com.avc.advanager.response.DeviceInitialResponse
+import com.avc.advanager.response.RegisterUserResponse
 import com.avc.advanager.source.AdvanagerDataSource
 import com.avc.advanager.util.Util.getString
 import com.avc.advanager.util.Util.isInternetConnected
@@ -29,7 +31,20 @@ object AdvanagerRemoteDataSource : AdvanagerDataSource {
             return Result.Fail(getString(R.string.internet_warning))
         }
         RetrofitApi.checkRetrofitUpdateRequired(IP)
-        val getResultDeferred = RetrofitApi.retrofitService.postUserInitiate()
+        val getResultDeferred = RetrofitApi.retrofitService.postDeviceInitiate()
+        return try {
+            Result.Success(getResultDeferred.await())
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
+
+    override suspend fun postUserRegister(registerInfo: RegisterInfo): Result<RegisterUserResponse> {
+        if (!isInternetConnected()) {
+            return Result.Fail(getString(R.string.internet_warning))
+        }
+        val getResultDeferred = RetrofitApi.retrofitService.postUserRegister(registerInfo)
+        //TODO error handle if return error code
         return try {
             Result.Success(getResultDeferred.await())
         } catch (e: Exception) {
