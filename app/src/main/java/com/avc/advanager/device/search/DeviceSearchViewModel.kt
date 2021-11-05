@@ -1,5 +1,6 @@
-package com.avc.advanager.login
+package com.avc.advanager.device.search
 
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,6 +9,7 @@ import com.avc.advanager.AdvanagerApplication
 import com.avc.advanager.R
 import com.avc.advanager.data.Result
 import com.avc.advanager.source.AdvanagerRepository
+import com.avc.advanager.source.LoadStatus
 import com.avc.advanager.util.Util
 import com.avc.advanager.util.Util.getString
 import kotlinx.coroutines.CoroutineScope
@@ -32,6 +34,29 @@ class DeviceSearchViewModel(private val repository: AdvanagerRepository) : ViewM
     val ipList: LiveData<List<String>>
         get() = _ipList
 
+    var typedIP= MutableLiveData<String>().apply{
+        value = ""
+    }
+
+    private val _error = MutableLiveData<String>()
+
+    val error: LiveData<String>
+        get() = _error
+
+    private val _deviceStatus = MutableLiveData<Number>()
+
+    val deviceStatus: LiveData<Number>
+        get() = _deviceStatus
+
+    private val _status = MutableLiveData<LoadStatus>()
+
+    val status: LiveData<LoadStatus>
+        get() = _status
+
+    private val _refreshStatus = MutableLiveData<Boolean>()
+
+    val refreshStatus: LiveData<Boolean>
+        get() = _refreshStatus
 
     /**
      * When the [ViewModel] is finished, we cancel our coroutine [viewModelJob], which tells the
@@ -42,29 +67,65 @@ class DeviceSearchViewModel(private val repository: AdvanagerRepository) : ViewM
         viewModelJob.cancel()
     }
 
+    fun refresh() {
+        if (status.value != LoadStatus.LOADING) {
+            scanDevice()
+        }
+    }
+
     private fun scanDevice() {
         coroutineScope.launch {
             if (!Util.isWifiEnabled()) {
                 Toast.makeText(
                     AdvanagerApplication.appContext,
-                    getString(R.string.info_scan_warning_no_wifi),
+                    getString(R.string.wifi_warning),
                     Toast.LENGTH_SHORT
                 ).show()
+                _status.value = LoadStatus.ERROR
             } else {
+                _status.value = LoadStatus.LOADING
                 val result = repository.getDeviceIPList()
                 _ipList.value = when (result) {
                     is Result.Success -> {
+                        _status.value = LoadStatus.DONE
                         result.data
                     }
                     is Result.Fail -> {
+                        _status.value = LoadStatus.ERROR
                         null
                     }
                     is Result.Error -> {
+                        _status.value = LoadStatus.ERROR
                         null
                     }
                     else -> {
+                        _status.value = LoadStatus.ERROR
                         null
                     }
+                }
+                _refreshStatus.value = false
+            }
+        }
+    }
+
+    fun checkDeviceStatus(IP:String){
+        Log.d("DeviceSearchFragment", "checkDeviceStatus: $IP")
+        coroutineScope.launch {
+            val result = repository.getDeviceInitialStatus(IP)
+            _deviceStatus.value = when (result) {
+                is Result.Success -> {
+                    _error.value = null
+                    result.data.initial_status
+                }
+                is Result.Fail -> {
+                    null
+                }
+                is Result.Error -> {
+                    _error.value = result.exception.toString()
+                    null
+                }
+                else -> {
+                    null
                 }
             }
         }

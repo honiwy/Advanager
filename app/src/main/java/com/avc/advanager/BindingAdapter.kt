@@ -1,10 +1,12 @@
 package com.avc.advanager
 
-import android.util.Log
 import android.view.View
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.avc.advanager.login.IPAdapter
+import com.avc.advanager.device.search.IPAdapter
+import com.avc.advanager.source.LoadStatus
 import com.avc.advanager.util.CurrentFragmentType
 
 
@@ -30,7 +32,7 @@ fun bindToolbarVisibility(view: View, fragment: CurrentFragmentType) {
         }
 }
 
-//Login  Fragment
+//Device Search Fragment
 @BindingAdapter("ipItems")
 fun bindRecyclerViewWithIPItems(recyclerView: RecyclerView, ipItems: List<String>?) {
     ipItems?.let {
@@ -38,6 +40,33 @@ fun bindRecyclerViewWithIPItems(recyclerView: RecyclerView, ipItems: List<String
             when (this) {
                 is IPAdapter -> submitList(it)
             }
+        }
+    }
+}
+
+/**
+ * According to [LoadStatus] to decide the visibility of [ProgressBar]
+ */
+@BindingAdapter("setupApiStatus")
+fun bindApiStatus(view: ProgressBar, status: LoadStatus?) {
+    when (status) {
+        LoadStatus.LOADING -> view.visibility = View.VISIBLE
+        LoadStatus.DONE, LoadStatus.ERROR -> view.visibility = View.GONE
+    }
+}
+
+/**
+ * According to [message] to decide the visibility of [errorText]
+ */
+@BindingAdapter("setupApiErrorMessage")
+fun bindApiErrorMessage(errorText: TextView, message: String?) {
+    when (message) {
+        null, "" -> {
+            errorText.visibility = View.GONE
+        }
+        else -> {
+            errorText.text = message
+            errorText.visibility = View.VISIBLE
         }
     }
 }

@@ -8,7 +8,7 @@
         <variable
             name="ip"
             type="String" />
-        <variable name="viewHolder" type="com.avc.advanager.login.IPAdapter.IPViewHolder"/>
+        <variable name="viewHolder" type="com.avc.advanager.device.search.IPAdapter"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

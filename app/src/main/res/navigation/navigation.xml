@@ -29,7 +29,7 @@
         tools:layout="@layout/activity_main"/>
     <fragment
         android:id="@+id/deviceSearchFragment"
-        android:name="com.avc.advanager.login.DeviceSearchFragment"
+        android:name="com.avc.advanager.device.search.DeviceSearchFragment"
         android:label="DeviceSearchFragment"
         tools:layout="@layout/fragment_device_search"/>
 

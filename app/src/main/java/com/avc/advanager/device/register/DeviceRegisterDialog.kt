@@ -1,0 +1,38 @@
+package com.avc.advanager.device.register
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
+import com.avc.advanager.R
+import com.avc.advanager.databinding.DialogRegisterBinding
+import com.avc.advanager.extension.getVmFactory
+
+class DeviceRegisterDialog : DialogFragment() {
+
+    private val viewModel by viewModels<DeviceRegisterViewModel> { getVmFactory() }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val binding: DialogRegisterBinding =
+            DataBindingUtil.inflate(inflater, R.layout.dialog_register, container, false)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+
+        binding.buttonClose.setOnClickListener {
+            dismiss()
+        }
+
+        return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NO_FRAME, R.style.MessageDialog)
+    }
+}

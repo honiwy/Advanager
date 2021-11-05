@@ -1,4 +1,4 @@
-package com.avc.advanager.login
+package com.avc.advanager.device.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
