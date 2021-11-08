@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import com.avc.advanager.NavigationDirections
 import com.avc.advanager.R
 import com.avc.advanager.databinding.DialogLoginBinding
 import com.avc.advanager.extension.getVmFactory
@@ -28,6 +31,21 @@ class DeviceLoginDialog : DialogFragment() {
             dismiss()
         }
 
+        binding.buttonLoginIp.setOnClickListener {
+            viewModel.login()
+        }
+
+        viewModel.navigateToHomePage.observe(this, Observer {
+            it?.let {
+                findNavController().navigate(
+                    NavigationDirections.navigateToStreamFragment(
+
+                    )
+                )
+                viewModel.onSucceeded()
+            }
+        })
+
         return binding.root
     }
 
@@ -35,6 +53,8 @@ class DeviceLoginDialog : DialogFragment() {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_FRAME, R.style.MessageDialog)
     }
+
+
 
 
 }

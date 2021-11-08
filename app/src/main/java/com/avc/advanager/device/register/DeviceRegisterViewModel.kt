@@ -6,10 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.avc.advanager.AdvanagerApplication
 import com.avc.advanager.R
+import com.avc.advanager.data.LoginInfo
 import com.avc.advanager.data.RegisterInfo
 import com.avc.advanager.data.Result
 import com.avc.advanager.source.AdvanagerRepository
-import com.avc.advanager.source.LoadStatus
 import com.avc.advanager.util.Util
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,11 +27,11 @@ class DeviceRegisterViewModel(
     // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    val account= MutableLiveData<String>().apply {
+    val account = MutableLiveData<String>().apply {
         value = ""
     }
 
-    val password= MutableLiveData<String>().apply {
+    val password = MutableLiveData<String>().apply {
         value = ""
     }
 
@@ -40,7 +40,7 @@ class DeviceRegisterViewModel(
     val passwordError: LiveData<String>
         get() = _passwordError
 
-    val repeatedPassword= MutableLiveData<String>().apply {
+    val repeatedPassword = MutableLiveData<String>().apply {
         value = ""
     }
 
@@ -54,14 +54,9 @@ class DeviceRegisterViewModel(
     val registerButtonEnabled: LiveData<Boolean>
         get() = _registerButtonEnabled
 
-    private val _status = MutableLiveData<LoadStatus>()
-
-    val status: LiveData<LoadStatus>
-        get() = _status
-
-    fun checkPasswordLegal(){
-        password.value?.let{
-            if(it.isNotEmpty()) {
+    fun checkPasswordLegal() {
+        password.value?.let {
+            if (it.isNotEmpty()) {
                 if (it.length < PASSWORD_LOWER_LIMIT)
                     _passwordError.value =
                         "Length of password should be more than $PASSWORD_LOWER_LIMIT character"
@@ -74,9 +69,49 @@ class DeviceRegisterViewModel(
                     _passwordError.value = "Password should contain at least one lowercase"
                 else if (!it.matches(Regex(".*\\d.*")))
                     _passwordError.value = "Password should contain at least one number"
-                else if (it.indexOfAny(charArrayOf('#', '%', '&', '`', '"', '\\', '/', '<', '>', ' ')) > 0)
-                    _passwordError.value = "Password should not contain #, %, &, `, \", \\, /, <, >, and space"
-                else if (it.indexOfAny(charArrayOf('!','$','\'','(',')','*','+',',','.',':',';','=','?','@','^','_','{','|','}','~','-'))<0)
+                else if (it.indexOfAny(
+                        charArrayOf(
+                            '#',
+                            '%',
+                            '&',
+                            '`',
+                            '"',
+                            '\\',
+                            '/',
+                            '<',
+                            '>',
+                            ' '
+                        )
+                    ) > 0
+                )
+                    _passwordError.value =
+                        "Password should not contain #, %, &, `, \", \\, /, <, >, and space"
+                else if (it.indexOfAny(
+                        charArrayOf(
+                            '!',
+                            '$',
+                            '\'',
+                            '(',
+                            ')',
+                            '*',
+                            '+',
+                            ',',
+                            '.',
+                            ':',
+                            ';',
+                            '=',
+                            '?',
+                            '@',
+                            '^',
+                            '_',
+                            '{',
+                            '|',
+                            '}',
+                            '~',
+                            '-'
+                        )
+                    ) < 0
+                )
                     _passwordError.value = "Password should contain at least one symbol"
                 else {
                     _passwordError.value = null
@@ -91,8 +126,7 @@ class DeviceRegisterViewModel(
                 if (it != password.value) {
                     _registerButtonEnabled.value = false
                     _repeatedPasswordError.value = "Passwords don't match"
-                }
-                else {
+                } else {
                     _registerButtonEnabled.value = true
                     _repeatedPasswordError.value = null
                 }
@@ -108,9 +142,7 @@ class DeviceRegisterViewModel(
                     Util.getString(R.string.wifi_warning),
                     Toast.LENGTH_SHORT
                 ).show()
-                _status.value = LoadStatus.ERROR
             } else {
-                _status.value = LoadStatus.LOADING
                 val registerInfo = RegisterInfo(
                     permissionType = RegisterInfo.SUPER_ADMINSTRATOR,
                     account = account.value ?: "admin",
@@ -119,20 +151,17 @@ class DeviceRegisterViewModel(
                 val result = repository.postUserRegister(registerInfo)
                 when (result) {
                     is Result.Success -> {
-                        _status.value = LoadStatus.DONE
                         result.data
                         //TODO display success toast
+                        login()
                     }
                     is Result.Fail -> {
-                        _status.value = LoadStatus.ERROR
                         null
                     }
                     is Result.Error -> {
-                        _status.value = LoadStatus.ERROR
                         null
                     }
                     else -> {
-                        _status.value = LoadStatus.ERROR
                         null
                     }
                 }
@@ -140,9 +169,66 @@ class DeviceRegisterViewModel(
         }
     }
 
+    fun login() {
+        coroutineScope.launch {
+            if (!Util.isWifiEnabled()) {
+                Toast.makeText(
+                    AdvanagerApplication.appContext,
+                    Util.getString(R.string.wifi_warning),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                val loginInfo = LoginInfo(
+                    account = account.value ?: "admin",
+                    password = password.value ?: "P@ssw0rD"
+                )
+                val result = repository.postUserLogin(loginInfo)
+                when (result) {
+                    is Result.Success -> {
+                        result.data
+                        navigateToHomePage()
+                    }
+                    is Result.Fail -> {
+                        null
+                    }
+                    is Result.Error -> {
+                        null
+                    }
+                    else -> {
+                        null
+                    }
+                }
+            }
+        }
+    }
+
+    // Handle leave login
+    private val _navigateToHomePage = MutableLiveData<Boolean>()
+
+    val navigateToHomePage: LiveData<Boolean>
+        get() = _navigateToHomePage
+
+    private fun navigateToHomePage() {
+        _navigateToHomePage.value = true
+//        Toast.makeText(
+//            AdvanagerApplication.appContext,
+//            AdvanagerApplication.instance.getString(R.string.login_success),
+//            Toast.LENGTH_SHORT
+//        ).show()
+    }
+
+    fun onSucceeded() {
+        _navigateToHomePage.value = null
+    }
+
     companion object {
         const val PASSWORD_LOWER_LIMIT = 8
         const val PASSWORD_UPPER_LIMIT = 16
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
     }
 
 }

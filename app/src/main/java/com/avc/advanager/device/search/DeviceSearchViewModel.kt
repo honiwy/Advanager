@@ -88,6 +88,10 @@ class DeviceSearchViewModel(private val repository: AdvanagerRepository) : ViewM
                 _ipList.value = when (result) {
                     is Result.Success -> {
                         _status.value = LoadStatus.DONE
+                        if(result.data.isEmpty())
+                            _error.value = "Not available device is detected!"
+                        else
+                            _error.value = null
                         result.data
                     }
                     is Result.Fail -> {

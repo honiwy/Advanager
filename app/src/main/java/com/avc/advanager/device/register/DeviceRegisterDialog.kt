@@ -11,6 +11,9 @@ import com.avc.advanager.R
 import com.avc.advanager.databinding.DialogRegisterBinding
 import com.avc.advanager.extension.getVmFactory
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.avc.advanager.NavigationDirections
 
 class DeviceRegisterDialog : DialogFragment() {
 
@@ -39,8 +42,18 @@ class DeviceRegisterDialog : DialogFragment() {
 
         binding.buttonRegisterIp.setOnClickListener {
             viewModel.register()
-            dismiss()
         }
+
+        viewModel.navigateToHomePage.observe(this, Observer {
+            it?.let {
+                findNavController().navigate(
+                    NavigationDirections.navigateToStreamFragment(
+
+                    )
+                )
+                viewModel.onSucceeded()
+            }
+        })
 
         return binding.root
     }

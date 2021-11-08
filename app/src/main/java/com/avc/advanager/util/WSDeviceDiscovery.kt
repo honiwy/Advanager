@@ -1,4 +1,4 @@
-package com.avc.advanager.utils
+package com.avc.advanager.util
 
 /**
  * Created by jimmy on 2017/5/10.

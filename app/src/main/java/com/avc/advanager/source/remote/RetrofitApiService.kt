@@ -1,7 +1,9 @@
 package com.avc.advanager.source.remote
 
+import com.avc.advanager.data.LoginInfo
 import com.avc.advanager.data.RegisterInfo
 import com.avc.advanager.response.DeviceInitialResponse
+import com.avc.advanager.response.LoginUserResponse
 import com.avc.advanager.response.RegisterUserResponse
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
@@ -84,6 +86,12 @@ interface RetrofitApiService {
     fun postUserRegister(
     @Body registerInfo: RegisterInfo
     ): Deferred<RegisterUserResponse>
+
+    @POST("users/login")
+    @Headers("Content-Type: application/json")
+    fun postUserLogin(
+        @Body loginInfo: LoginInfo
+    ): Deferred<LoginUserResponse>
 //
 //    @POST("order/checkout")
 //    @Headers("Content-Type: application/json")
