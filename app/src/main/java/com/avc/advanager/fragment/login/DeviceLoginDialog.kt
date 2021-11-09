@@ -1,4 +1,4 @@
-package com.avc.advanager.device.login
+package com.avc.advanager.fragment.login
 
 import android.os.Bundle
 import android.view.LayoutInflater

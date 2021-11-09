@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.avc.advanager.device.login.DeviceLoginViewModel" />
+            type="com.avc.advanager.fragment.login.DeviceLoginViewModel" />
 
         <import type="android.view.View" />
     </data>
@@ -46,7 +46,7 @@
                 android:layout_marginTop="8dp"
                 android:text="IP: "
                 android:textColor="@color/dark_blue"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -56,9 +56,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="192.168.1.6"
+                android:text="@{viewModel.selectedIP}"
                 android:textColor="@color/dark_blue"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/text_login_ip_title"
                 app:layout_constraintStart_toEndOf="@+id/text_login_ip_title"
@@ -68,10 +68,10 @@
                 android:id="@+id/text_login_account_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:text="Account"
                 android:textColor="@color/dark_blue"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 app:layout_constraintStart_toStartOf="@+id/text_login_ip_title"
                 app:layout_constraintTop_toBottomOf="@+id/text_login_ip_title" />
 
@@ -80,12 +80,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:ems="10"
-                android:text="@={viewModel.account}"
                 android:hint="admin"
+                android:singleLine="true"
                 android:minHeight="48dp"
+                android:text="@={viewModel.account}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_login_account_title" />
@@ -94,10 +94,10 @@
                 android:id="@+id/text_login_password_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:text="Password"
                 android:textColor="@color/dark_blue"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 app:layout_constraintStart_toStartOf="@+id/text_login_ip_title"
                 app:layout_constraintTop_toBottomOf="@+id/edit_text_login_account_content" />
 
@@ -106,12 +106,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:singleLine="true"
                 android:ems="10"
-                android:text="@={viewModel.password}"
                 android:hint="P@$$w0rD"
                 android:minHeight="48dp"
+                android:text="@={viewModel.password}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_login_password_title" />

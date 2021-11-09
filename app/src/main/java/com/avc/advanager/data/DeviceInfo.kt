@@ -1,11 +1,14 @@
 package com.avc.advanager.data
 
-import android.os.Parcelable
+import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class DeviceInfo(
+    @Json(name = "ip")
     var ip: String = "",
-    var account: String = "",
-    var password: String = ""
-) : Parcelable
+
+    override var account: String,
+
+    override var password: String
+) : AccountInfo(account, password)

@@ -1,4 +1,4 @@
-package com.avc.advanager.device.search
+package com.avc.advanager.fragment.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

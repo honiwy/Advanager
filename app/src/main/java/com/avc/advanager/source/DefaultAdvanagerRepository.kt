@@ -1,8 +1,9 @@
 package com.avc.advanager.source
 
-import com.avc.advanager.data.LoginInfo
+import com.avc.advanager.data.AccountInfo
 import com.avc.advanager.data.RegisterInfo
 import com.avc.advanager.data.Result
+import com.avc.advanager.data.Token
 import com.avc.advanager.response.DeviceInitialResponse
 import com.avc.advanager.response.LoginUserResponse
 import com.avc.advanager.response.RegisterUserResponse
@@ -27,7 +28,11 @@ class DefaultAdvanagerRepository(
         return remoteDataSource.postUserRegister(registerInfo)
     }
 
-    override suspend fun postUserLogin(loginInfo: LoginInfo): Result<LoginUserResponse> {
-        return remoteDataSource.postUserLogin(loginInfo)
+    override suspend fun postUserLogin(accountInfo: AccountInfo): Result<LoginUserResponse> {
+        return remoteDataSource.postUserLogin(accountInfo)
+    }
+
+    override suspend fun postUserLogout(token: Token): Result<Token> {
+        return remoteDataSource.postUserLogout(token)
     }
 }

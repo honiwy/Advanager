@@ -1,4 +1,4 @@
-package com.avc.advanager.device.register
+package com.avc.advanager.fragment.register
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,9 +11,10 @@ import com.avc.advanager.R
 import com.avc.advanager.databinding.DialogRegisterBinding
 import com.avc.advanager.extension.getVmFactory
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.avc.advanager.NavigationDirections
+import com.avc.advanager.fragment.login.DeviceLoginDialog
+import com.avc.advanager.fragment.search.DeviceSearchFragment
 
 class DeviceRegisterDialog : DialogFragment() {
 
@@ -44,13 +45,9 @@ class DeviceRegisterDialog : DialogFragment() {
             viewModel.register()
         }
 
-        viewModel.navigateToHomePage.observe(this, Observer {
+        viewModel.navigateToLogin.observe(this, Observer {
             it?.let {
-                findNavController().navigate(
-                    NavigationDirections.navigateToStreamFragment(
-
-                    )
-                )
+                DeviceLoginDialog().show(childFragmentManager, "DIALOG_LOGIN")
                 viewModel.onSucceeded()
             }
         })

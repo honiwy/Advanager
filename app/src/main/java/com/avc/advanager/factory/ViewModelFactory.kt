@@ -3,10 +3,11 @@ package com.avc.advanager.factory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.avc.advanager.MainViewModel
-import com.avc.advanager.device.search.DeviceSearchViewModel
-import com.avc.advanager.device.login.DeviceLoginViewModel
-import com.avc.advanager.device.register.DeviceRegisterViewModel
+import com.avc.advanager.fragment.search.DeviceSearchViewModel
+import com.avc.advanager.fragment.login.DeviceLoginViewModel
+import com.avc.advanager.fragment.register.DeviceRegisterViewModel
 import com.avc.advanager.source.AdvanagerRepository
+import com.avc.advanager.ui.setting.SettingViewModel
 
 class ViewModelFactory(
     private val advanagerRepository: AdvanagerRepository
@@ -26,6 +27,9 @@ class ViewModelFactory(
 
                 isAssignableFrom(MainViewModel::class.java) ->
                     MainViewModel()
+
+                isAssignableFrom(SettingViewModel::class.java) ->
+                    SettingViewModel(advanagerRepository)
 
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

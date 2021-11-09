@@ -1,4 +1,4 @@
-package com.avc.advanager.device.search
+package com.avc.advanager.fragment.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.avc.advanager.databinding.FragmentDeviceSearchBinding
-import com.avc.advanager.device.login.DeviceLoginDialog
-import com.avc.advanager.device.register.DeviceRegisterDialog
+import com.avc.advanager.fragment.login.DeviceLoginDialog
+import com.avc.advanager.fragment.register.DeviceRegisterDialog
 import com.avc.advanager.extension.getVmFactory
 import com.avc.advanager.response.DeviceInitialResponse.Companion.INITIAL_ALREADY
 import com.avc.advanager.response.DeviceInitialResponse.Companion.INITIAL_YET

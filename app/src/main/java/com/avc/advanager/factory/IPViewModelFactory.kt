@@ -2,10 +2,6 @@ package com.avc.advanager.factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.avc.advanager.MainViewModel
-import com.avc.advanager.device.search.DeviceSearchViewModel
-import com.avc.advanager.device.login.DeviceLoginViewModel
-import com.avc.advanager.device.register.DeviceRegisterViewModel
 import com.avc.advanager.source.AdvanagerRepository
 
 class IPViewModelFactory(

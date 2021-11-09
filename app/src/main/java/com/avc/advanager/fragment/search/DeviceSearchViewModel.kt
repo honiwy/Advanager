@@ -1,4 +1,4 @@
-package com.avc.advanager.device.search
+package com.avc.advanager.fragment.search
 
 import android.util.Log
 import android.widget.Toast
@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.avc.advanager.AdvanagerApplication
 import com.avc.advanager.R
 import com.avc.advanager.data.Result
+import com.avc.advanager.fragment.DeviceManager
 import com.avc.advanager.source.AdvanagerRepository
 import com.avc.advanager.source.LoadStatus
 import com.avc.advanager.util.Util
@@ -26,6 +27,9 @@ class DeviceSearchViewModel(private val repository: AdvanagerRepository) : ViewM
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     init {
+        val lastIP = DeviceManager.deviceIp
+        if (!lastIP.isNullOrEmpty())//has login before
+            checkDeviceStatus(lastIP)
         scanDevice()
     }
 
@@ -34,7 +38,7 @@ class DeviceSearchViewModel(private val repository: AdvanagerRepository) : ViewM
     val ipList: LiveData<List<String>>
         get() = _ipList
 
-    var typedIP= MutableLiveData<String>().apply{
+    var typedIP = MutableLiveData<String>().apply {
         value = ""
     }
 
@@ -88,10 +92,13 @@ class DeviceSearchViewModel(private val repository: AdvanagerRepository) : ViewM
                 _ipList.value = when (result) {
                     is Result.Success -> {
                         _status.value = LoadStatus.DONE
-                        if(result.data.isEmpty())
-                            _error.value = "Not available device is detected!"
-                        else
-                            _error.value = null
+                        if (result.data.isEmpty()) {
+                            Toast.makeText(
+                                AdvanagerApplication.appContext,
+                                "No available device is detected!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                         result.data
                     }
                     is Result.Fail -> {
@@ -112,8 +119,8 @@ class DeviceSearchViewModel(private val repository: AdvanagerRepository) : ViewM
         }
     }
 
-    fun checkDeviceStatus(IP:String){
-        Log.d("DeviceSearchFragment", "checkDeviceStatus: $IP")
+    fun checkDeviceStatus(IP: String) {
+        DeviceManager.deviceIp = IP
         coroutineScope.launch {
             val result = repository.getDeviceInitialStatus(IP)
             _deviceStatus.value = when (result) {

@@ -1,4 +1,4 @@
-package com.avc.advanager.device.login
+package com.avc.advanager.fragment.login
 
 import android.util.Log
 import android.widget.Toast
@@ -7,11 +7,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.avc.advanager.AdvanagerApplication
 import com.avc.advanager.R
-import com.avc.advanager.data.LoginInfo
-import com.avc.advanager.data.RegisterInfo
+import com.avc.advanager.data.AccountInfo
 import com.avc.advanager.data.Result
+import com.avc.advanager.fragment.DeviceManager
 import com.avc.advanager.source.AdvanagerRepository
-import com.avc.advanager.source.LoadStatus
 import com.avc.advanager.util.Util
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,6 +26,8 @@ class DeviceLoginViewModel(private val repository: AdvanagerRepository) : ViewMo
     // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
+    val selectedIP: String = DeviceManager.deviceIp?:""
+
     val account= MutableLiveData<String>().apply {
         value = ""
     }
@@ -35,9 +36,17 @@ class DeviceLoginViewModel(private val repository: AdvanagerRepository) : ViewMo
         value = ""
     }
 
+    init {
+        //help to fill in
+        if (!DeviceManager.deviceAccount.isNullOrEmpty() && !DeviceManager.devicePassword.isNullOrEmpty()) {
+            account.value = DeviceManager.deviceAccount
+            password.value = DeviceManager.devicePassword
+//            login()
+        }
+    }
+
     fun login() {
         coroutineScope.launch {
-            Log.d("DeviceLoginViewModel", "login:  ")
             if (!Util.isWifiEnabled()) {
                 Toast.makeText(
                     AdvanagerApplication.appContext,
@@ -45,7 +54,7 @@ class DeviceLoginViewModel(private val repository: AdvanagerRepository) : ViewMo
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                val loginInfo = LoginInfo(
+                val loginInfo = AccountInfo(
                     account = account.value ?: "admin",
                     password = password.value ?: "P@ssw0rD"
                 )
@@ -53,8 +62,9 @@ class DeviceLoginViewModel(private val repository: AdvanagerRepository) : ViewMo
                 when (result) {
                     is Result.Success -> {
                         result.data
-                        //TODO display success toast
-                        Log.d("DeviceLoginViewModel", "login: Success "+result.data.token)
+                        DeviceManager.deviceAccount = loginInfo.account
+                        DeviceManager.devicePassword = loginInfo.password
+                        DeviceManager.deviceToken = result.data.token
                         navigateToHomePage()
                     }
                     is Result.Fail -> {
@@ -62,6 +72,11 @@ class DeviceLoginViewModel(private val repository: AdvanagerRepository) : ViewMo
                     }
                     is Result.Error -> {
                         null
+                        Toast.makeText(
+                            AdvanagerApplication.appContext,
+                            "Wrong Password!",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                     else -> {
                         null
@@ -79,11 +94,11 @@ class DeviceLoginViewModel(private val repository: AdvanagerRepository) : ViewMo
 
     private fun navigateToHomePage() {
         _navigateToHomePage.value = true
-//        Toast.makeText(
-//            AdvanagerApplication.appContext,
-//            AdvanagerApplication.instance.getString(R.string.login_success),
-//            Toast.LENGTH_SHORT
-//        ).show()
+        Toast.makeText(
+            AdvanagerApplication.appContext,
+            "Login Success!",
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     fun onSucceeded() {

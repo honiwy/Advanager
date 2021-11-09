@@ -5,11 +5,10 @@ import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class LoginInfo(
+open class AccountInfo(
     @Json(name = "account")
-    var account: String = "",
+    open var account: String = "",
 
     @Json(name = "password")
-    var password: String = ""
-) : Parcelable {
-}
+    open var password: String = ""
+) : Parcelable

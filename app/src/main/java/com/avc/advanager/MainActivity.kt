@@ -3,14 +3,17 @@ package com.avc.advanager
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import com.avc.advanager.databinding.ActivityMainBinding
 import com.avc.advanager.extension.getVmFactory
+import com.avc.advanager.fragment.login.DeviceLoginDialog
 import com.avc.advanager.util.CurrentFragmentType
 
 class MainActivity : AppCompatActivity() {
@@ -48,6 +51,13 @@ class MainActivity : AppCompatActivity() {
                     )
                     return@setOnItemSelectedListener true
                 }
+                R.id.navigation_setting -> {
+                    findNavController(R.id.nav_host).navigate(
+                        NavigationDirections.navigateToSettingFragment(
+                        )
+                    )
+                    return@setOnItemSelectedListener true
+                }
             }
             false
         }
@@ -62,6 +72,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.logFragment -> CurrentFragmentType.LOG
                 R.id.notificationsFragment -> CurrentFragmentType.NOTIFICATION
                 R.id.deviceSearchFragment -> CurrentFragmentType.DEVICESEARCH
+                R.id.settingFragment -> CurrentFragmentType.SETTING
                 else -> viewModel.currentFragmentType.value
             }
         }

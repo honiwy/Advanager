@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.avc.advanager.device.register.DeviceRegisterViewModel" />
+            type="com.avc.advanager.fragment.register.DeviceRegisterViewModel" />
 
         <import type="android.view.View" />
     </data>
@@ -45,7 +45,7 @@
                 android:layout_marginTop="8dp"
                 android:text="IP: "
                 android:textColor="@color/dark_blue"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -56,7 +56,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:textColor="@color/dark_blue"
-                android:textSize="20sp"
+                android:text="@{viewModel.selectedIP}"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/text_register_ip_title"
                 app:layout_constraintStart_toEndOf="@+id/text_register_ip_title"
@@ -66,10 +67,10 @@
                 android:id="@+id/text_register_permission_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:text="Permission"
                 android:textColor="@color/dark_blue"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 app:layout_constraintStart_toStartOf="@+id/text_register_ip_title"
                 app:layout_constraintTop_toBottomOf="@+id/text_register_ip_title" />
 
@@ -78,7 +79,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:clickable="false"
                 android:cursorVisible="false"
@@ -95,10 +95,10 @@
                 android:id="@+id/text_register_account_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:text="Account"
                 android:textColor="@color/dark_blue"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 app:layout_constraintStart_toStartOf="@+id/text_register_ip_title"
                 app:layout_constraintTop_toBottomOf="@+id/edit_text_register_permission_content" />
 
@@ -107,10 +107,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:ems="10"
                 android:hint="admin"
+                android:singleLine="true"
                 android:minHeight="48dp"
                 android:text="@={viewModel.account}"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -121,10 +121,10 @@
                 android:id="@+id/text_register_password_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:text="Password"
                 android:textColor="@color/dark_blue"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 app:layout_constraintStart_toStartOf="@+id/text_register_ip_title"
                 app:layout_constraintTop_toBottomOf="@+id/edit_text_register_account_content" />
 
@@ -133,9 +133,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:ems="10"
+                android:singleLine="true"
                 android:hint="P@$$w0rD"
                 android:minHeight="48dp"
                 android:text="@={viewModel.password}"
@@ -149,7 +149,7 @@
                 android:layout_height="wrap_content"
                 android:singleLine="false"
                 android:textColor="@color/dark_red"
-                android:textSize="10sp"
+                android:textSize="10dp"
                 app:layout_constraintStart_toStartOf="@+id/text_register_ip_title"
                 app:layout_constraintTop_toBottomOf="@+id/edit_text_register_password_content"
                 app:setupErrorMessage="@{viewModel.passwordError}" />
@@ -158,10 +158,10 @@
                 android:id="@+id/text_register_repeat_password_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:text="Confirm Password"
                 android:textColor="@color/dark_blue"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 app:layout_constraintStart_toStartOf="@+id/text_register_ip_title"
                 app:layout_constraintTop_toBottomOf="@+id/text_error" />
 
@@ -170,9 +170,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:ems="10"
+                android:singleLine="true"
                 android:hint="P@$$w0rD"
                 android:minHeight="48dp"
                 android:text="@={viewModel.repeatedPassword}"
@@ -186,7 +186,7 @@
                 android:layout_height="wrap_content"
                 android:singleLine="false"
                 android:textColor="@color/dark_red"
-                android:textSize="10sp"
+                android:textSize="10dp"
                 app:layout_constraintStart_toStartOf="@+id/text_register_ip_title"
                 app:layout_constraintTop_toBottomOf="@+id/edit_text_repeat_register_password_content"
                 app:setupErrorMessage="@{viewModel.repeatedPasswordError}" />

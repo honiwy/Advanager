@@ -1,7 +1,8 @@
 package com.avc.advanager.source.remote
 
-import com.avc.advanager.data.LoginInfo
+import com.avc.advanager.data.AccountInfo
 import com.avc.advanager.data.RegisterInfo
+import com.avc.advanager.data.Token
 import com.avc.advanager.response.DeviceInitialResponse
 import com.avc.advanager.response.LoginUserResponse
 import com.avc.advanager.response.RegisterUserResponse
@@ -14,7 +15,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body
-import retrofit2.http.FormUrlEncoded
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
@@ -90,8 +90,14 @@ interface RetrofitApiService {
     @POST("users/login")
     @Headers("Content-Type: application/json")
     fun postUserLogin(
-        @Body loginInfo: LoginInfo
+        @Body accountInfo: AccountInfo
     ): Deferred<LoginUserResponse>
+
+    @POST("users/logout")
+    @Headers("Content-Type: application/json")
+    fun postUserLogout(
+        @Body token: Token
+    ): Deferred<Token>
 //
 //    @POST("order/checkout")
 //    @Headers("Content-Type: application/json")

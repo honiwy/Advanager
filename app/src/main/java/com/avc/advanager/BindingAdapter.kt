@@ -5,7 +5,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.avc.advanager.device.search.IPAdapter
+import com.avc.advanager.fragment.search.IPAdapter
 import com.avc.advanager.source.LoadStatus
 import com.avc.advanager.util.CurrentFragmentType
 
@@ -17,6 +17,7 @@ fun bindBottomNavVisibility(view: View, fragment: CurrentFragmentType) {
             CurrentFragmentType.STREAM -> View.VISIBLE
             CurrentFragmentType.LOG -> View.VISIBLE
             CurrentFragmentType.NOTIFICATION -> View.VISIBLE
+            CurrentFragmentType.SETTING -> View.VISIBLE
             else -> View.GONE
         }
 }
@@ -28,6 +29,7 @@ fun bindToolbarVisibility(view: View, fragment: CurrentFragmentType) {
             CurrentFragmentType.STREAM -> View.VISIBLE
             CurrentFragmentType.LOG -> View.VISIBLE
             CurrentFragmentType.NOTIFICATION -> View.VISIBLE
+            CurrentFragmentType.SETTING -> View.VISIBLE
             else -> View.GONE
         }
 }

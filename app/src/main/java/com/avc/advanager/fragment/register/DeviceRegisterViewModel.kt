@@ -1,4 +1,4 @@
-package com.avc.advanager.device.register
+package com.avc.advanager.fragment.register
 
 import android.widget.Toast
 import androidx.lifecycle.LiveData
@@ -6,10 +6,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.avc.advanager.AdvanagerApplication
 import com.avc.advanager.R
-import com.avc.advanager.data.LoginInfo
+import com.avc.advanager.data.AccountInfo
 import com.avc.advanager.data.RegisterInfo
 import com.avc.advanager.data.Result
+import com.avc.advanager.fragment.DeviceManager
 import com.avc.advanager.source.AdvanagerRepository
+import com.avc.advanager.source.LoadStatus
 import com.avc.advanager.util.Util
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -26,6 +28,8 @@ class DeviceRegisterViewModel(
 
     // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+
+    val selectedIP: String = DeviceManager.deviceIp?:""
 
     val account = MutableLiveData<String>().apply {
         value = ""
@@ -53,6 +57,14 @@ class DeviceRegisterViewModel(
 
     val registerButtonEnabled: LiveData<Boolean>
         get() = _registerButtonEnabled
+
+    init {
+        //help to fill in
+        if (!DeviceManager.deviceAccount.isNullOrEmpty())
+            account.value = DeviceManager.deviceAccount
+        if (!DeviceManager.devicePassword.isNullOrEmpty())
+            password.value = DeviceManager.devicePassword
+    }
 
     fun checkPasswordLegal() {
         password.value?.let {
@@ -143,6 +155,7 @@ class DeviceRegisterViewModel(
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
+
                 val registerInfo = RegisterInfo(
                     permissionType = RegisterInfo.SUPER_ADMINSTRATOR,
                     account = account.value ?: "admin",
@@ -152,8 +165,9 @@ class DeviceRegisterViewModel(
                 when (result) {
                     is Result.Success -> {
                         result.data
-                        //TODO display success toast
-                        login()
+                        DeviceManager.deviceAccount = registerInfo.account
+                        DeviceManager.devicePassword = registerInfo.password
+                        navigateToLogin()
                     }
                     is Result.Fail -> {
                         null
@@ -169,56 +183,22 @@ class DeviceRegisterViewModel(
         }
     }
 
-    fun login() {
-        coroutineScope.launch {
-            if (!Util.isWifiEnabled()) {
-                Toast.makeText(
-                    AdvanagerApplication.appContext,
-                    Util.getString(R.string.wifi_warning),
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
-                val loginInfo = LoginInfo(
-                    account = account.value ?: "admin",
-                    password = password.value ?: "P@ssw0rD"
-                )
-                val result = repository.postUserLogin(loginInfo)
-                when (result) {
-                    is Result.Success -> {
-                        result.data
-                        navigateToHomePage()
-                    }
-                    is Result.Fail -> {
-                        null
-                    }
-                    is Result.Error -> {
-                        null
-                    }
-                    else -> {
-                        null
-                    }
-                }
-            }
-        }
-    }
+    private val _navigateToLogin = MutableLiveData<Boolean>()
 
-    // Handle leave login
-    private val _navigateToHomePage = MutableLiveData<Boolean>()
+    val navigateToLogin: LiveData<Boolean>
+        get() = _navigateToLogin
 
-    val navigateToHomePage: LiveData<Boolean>
-        get() = _navigateToHomePage
-
-    private fun navigateToHomePage() {
-        _navigateToHomePage.value = true
-//        Toast.makeText(
-//            AdvanagerApplication.appContext,
-//            AdvanagerApplication.instance.getString(R.string.login_success),
-//            Toast.LENGTH_SHORT
-//        ).show()
+    private fun navigateToLogin() {
+        _navigateToLogin.value = true
+        Toast.makeText(
+            AdvanagerApplication.appContext,
+            "Register success!",
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     fun onSucceeded() {
-        _navigateToHomePage.value = null
+        _navigateToLogin.value = null
     }
 
     companion object {

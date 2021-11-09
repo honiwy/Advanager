@@ -2,16 +2,19 @@ package com.avc.advanager.source.remote
 
 import android.util.Log
 import com.avc.advanager.R
-import com.avc.advanager.data.LoginInfo
+import com.avc.advanager.data.AccountInfo
 import com.avc.advanager.data.RegisterInfo
 import com.avc.advanager.data.Result
+import com.avc.advanager.data.Token
 import com.avc.advanager.response.DeviceInitialResponse
+import com.avc.advanager.response.ErrorResponse
 import com.avc.advanager.response.LoginUserResponse
 import com.avc.advanager.response.RegisterUserResponse
 import com.avc.advanager.source.AdvanagerDataSource
 import com.avc.advanager.util.Util.getString
 import com.avc.advanager.util.Util.isInternetConnected
 import com.avc.advanager.util.WSDeviceDiscovery
+import okhttp3.internal.wait
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -56,14 +59,26 @@ object AdvanagerRemoteDataSource : AdvanagerDataSource {
         }
     }
 
-    override suspend fun postUserLogin(loginInfo: LoginInfo): Result<LoginUserResponse> {
+    override suspend fun postUserLogin(accountInfo: AccountInfo): Result<LoginUserResponse> {
         if (!isInternetConnected()) {
             return Result.Fail(getString(R.string.internet_warning))
         }
-        val getResultDeferred = RetrofitApi.retrofitService.postUserLogin(loginInfo)
+        val getResultDeferred = RetrofitApi.retrofitService.postUserLogin(accountInfo)
         //TODO error handle if return error code
         return try {
-            Log.d("TAG", "postUserLogin: success")
+            Result.Success(getResultDeferred.await())
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
+
+    override suspend fun postUserLogout(token: Token): Result<Token>{
+        if (!isInternetConnected()) {
+            return Result.Fail(getString(R.string.internet_warning))
+        }
+        val getResultDeferred = RetrofitApi.retrofitService.postUserLogout(token)
+        //TODO error handle if return error code
+        return try {
             Result.Success(getResultDeferred.await())
         } catch (e: Exception) {
             Result.Error(e)

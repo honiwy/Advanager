@@ -4,5 +4,6 @@ enum class CurrentFragmentType(val value: String) {
     STREAM(""),
     LOG(""),
     NOTIFICATION(""),
-    DEVICESEARCH("")
+    DEVICESEARCH(""),
+    SETTING("")
 }
