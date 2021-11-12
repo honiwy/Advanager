@@ -6,9 +6,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 open class AccountInfo(
-    @Json(name = "account")
     open var account: String = "",
 
-    @Json(name = "password")
     open var password: String = ""
 ) : Parcelable

@@ -6,6 +6,5 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Token(
-    @Json(name = "token")
     var token: String
 ) : Parcelable

@@ -1,41 +1,47 @@
 package com.avc.advanager.fragment.login
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.avc.advanager.AdvanagerApplication
 import com.avc.advanager.NavigationDirections
-import com.avc.advanager.R
-import com.avc.advanager.databinding.DialogLoginBinding
-import com.avc.advanager.extension.getVmFactory
+import com.avc.advanager.databinding.FragmentLoginBinding
+import javax.inject.Inject
 
-class DeviceLoginDialog : DialogFragment() {
+class DeviceLoginFragment : Fragment() {
 
-    private val viewModel by viewModels<DeviceLoginViewModel> { getVmFactory() }
+    @Inject
+    lateinit var viewModel: DeviceLoginViewModel
+
+    private lateinit var binding: FragmentLoginBinding
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (requireActivity().application as AdvanagerApplication).appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding: DialogLoginBinding =
-            DataBindingUtil.inflate(inflater, R.layout.dialog_login, container, false)
+        binding = FragmentLoginBinding.inflate(inflater, container, false).apply {
+            viewModel = viewModel
+        }
         binding.lifecycleOwner = this
-        binding.viewModel = viewModel
 
         binding.buttonClose.setOnClickListener {
-            dismiss()
         }
 
         binding.buttonLoginIp.setOnClickListener {
             viewModel.login()
         }
 
-        viewModel.navigateToHomePage.observe(this, Observer {
+        viewModel.navigateToHomePage.observe(viewLifecycleOwner, Observer {
             it?.let {
                 findNavController().navigate(
                     NavigationDirections.navigateToStreamFragment(
@@ -48,13 +54,6 @@ class DeviceLoginDialog : DialogFragment() {
 
         return binding.root
     }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_FRAME, R.style.MessageDialog)
-    }
-
-
 
 
 }

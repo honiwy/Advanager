@@ -1,4 +1,4 @@
-package com.avc.advanager.source
+package com.avc.advanager.data.source
 
 enum class LoadStatus {
     LOADING,

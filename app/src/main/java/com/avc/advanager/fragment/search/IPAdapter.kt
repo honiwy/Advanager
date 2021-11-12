@@ -5,35 +5,36 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.avc.advanager.data.Device
 import com.avc.advanager.databinding.ItemIpBinding
 
 class IPAdapter(
     private val onClickListener: OnClickListener
-) : ListAdapter<String, IPAdapter.IPViewHolder>(DiffCallback) {
+) : ListAdapter<Device, IPAdapter.IPViewHolder>(DiffCallback) {
 
-    class OnClickListener(val clickListener: (ip: String) -> Unit) {
-        fun onClick(ip: String) = clickListener(ip)
+    class OnClickListener(val clickListener: (device: Device) -> Unit) {
+        fun onClick(device: Device) = clickListener(device)
     }
 
     class IPViewHolder(private var binding: ItemIpBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(ip: String, onClickListener: OnClickListener) {
-            binding.ip = ip
+        fun bind(device: Device, onClickListener: OnClickListener) {
+            binding.ip = device.ip
             binding.root.setOnClickListener {
-                onClickListener.onClick(ip)
+                onClickListener.onClick(device)
             }
             binding.executePendingBindings()
         }
 
     }
 
-    companion object DiffCallback : DiffUtil.ItemCallback<String>() {
-        override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
+    companion object DiffCallback : DiffUtil.ItemCallback<Device>() {
+        override fun areItemsTheSame(oldItem: Device, newItem: Device): Boolean {
             return (oldItem === newItem)
         }
 
-        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
+        override fun areContentsTheSame(oldItem: Device, newItem: Device): Boolean {
             return oldItem == newItem
         }
     }

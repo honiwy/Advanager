@@ -10,16 +10,17 @@ import com.avc.advanager.data.AccountInfo
 import com.avc.advanager.data.RegisterInfo
 import com.avc.advanager.data.Result
 import com.avc.advanager.fragment.DeviceManager
-import com.avc.advanager.source.AdvanagerRepository
-import com.avc.advanager.source.LoadStatus
+import com.avc.advanager.data.source.AdvanagerRepository
+import com.avc.advanager.data.source.LoadStatus
 import com.avc.advanager.util.Util
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
-class DeviceRegisterViewModel(
+class DeviceRegisterViewModel@Inject constructor(
     private val repository: AdvanagerRepository
 ) : ViewModel() {
 
@@ -126,7 +127,7 @@ class DeviceRegisterViewModel(
                 )
                     _passwordError.value = "Password should contain at least one symbol"
                 else {
-                    _passwordError.value = null
+//                    _passwordError.value = null
                 }
             }
         }
@@ -140,47 +141,47 @@ class DeviceRegisterViewModel(
                     _repeatedPasswordError.value = "Passwords don't match"
                 } else {
                     _registerButtonEnabled.value = true
-                    _repeatedPasswordError.value = null
+//                    _repeatedPasswordError.value = null
                 }
             }
         }
     }
 
     fun register() {
-        coroutineScope.launch {
-            if (!Util.isWifiEnabled()) {
-                Toast.makeText(
-                    AdvanagerApplication.appContext,
-                    Util.getString(R.string.wifi_warning),
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
-
-                val registerInfo = RegisterInfo(
-                    permissionType = RegisterInfo.SUPER_ADMINSTRATOR,
-                    account = account.value ?: "admin",
-                    password = password.value ?: "P@ssw0rD"
-                )
-                val result = repository.postUserRegister(registerInfo)
-                when (result) {
-                    is Result.Success -> {
-                        result.data
-                        DeviceManager.deviceAccount = registerInfo.account
-                        DeviceManager.devicePassword = registerInfo.password
-                        navigateToLogin()
-                    }
-                    is Result.Fail -> {
-                        null
-                    }
-                    is Result.Error -> {
-                        null
-                    }
-                    else -> {
-                        null
-                    }
-                }
-            }
-        }
+//        coroutineScope.launch {
+//            if (!Util.isWifiEnabled()) {
+//                Toast.makeText(
+//                    AdvanagerApplication.appContext,
+//                    Util.getString(R.string.wifi_warning),
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            } else {
+//
+//                val registerInfo = RegisterInfo(
+//                    permissionType = RegisterInfo.SUPER_ADMINSTRATOR,
+//                    account = account.value ?: "admin",
+//                    password = password.value ?: "P@ssw0rD"
+//                )
+//                val result = repository.postUserRegister(registerInfo)
+//                when (result) {
+//                    is Result.Success -> {
+//                        result.data
+//                        DeviceManager.deviceAccount = registerInfo.account
+//                        DeviceManager.devicePassword = registerInfo.password
+//                        navigateToLogin()
+//                    }
+//                    is Result.Fail -> {
+//                        null
+//                    }
+//                    is Result.Error -> {
+//                        null
+//                    }
+//                    else -> {
+//                        null
+//                    }
+//                }
+//            }
+//        }
     }
 
     private val _navigateToLogin = MutableLiveData<Boolean>()
@@ -198,7 +199,7 @@ class DeviceRegisterViewModel(
     }
 
     fun onSucceeded() {
-        _navigateToLogin.value = null
+//        _navigateToLogin.value = null
     }
 
     companion object {

@@ -11,13 +11,13 @@ import com.avc.advanager.AdvanagerApplication
 object Util {
     fun isWifiEnabled(): Boolean {
         val wifiManager =
-            AdvanagerApplication.instance.getSystemService(Context.WIFI_SERVICE) as WifiManager
+            AdvanagerApplication.appContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
         return wifiManager.isWifiEnabled
     }
 
     fun isInternetConnected(): Boolean {
         val connectivityManager =
-            AdvanagerApplication.instance.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            AdvanagerApplication.appContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkCapabilities = connectivityManager.activeNetwork ?: return false
         val actNw =
             connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
@@ -30,6 +30,6 @@ object Util {
     }
 
     fun getString(resourceId: Int): String {
-        return AdvanagerApplication.instance.getString(resourceId)
+        return AdvanagerApplication.appContext.getString(resourceId)
     }
 }

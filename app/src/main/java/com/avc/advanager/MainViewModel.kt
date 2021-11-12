@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import com.avc.advanager.data.Result
 import com.avc.advanager.data.Token
 import com.avc.advanager.fragment.DeviceManager
-import com.avc.advanager.source.AdvanagerRepository
-import com.avc.advanager.source.LoadStatus
+import com.avc.advanager.data.source.AdvanagerRepository
+import com.avc.advanager.data.source.LoadStatus
 import com.avc.advanager.util.CurrentFragmentType
 import com.avc.advanager.util.Util
 import kotlinx.coroutines.CoroutineScope

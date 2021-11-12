@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@+id/deviceSearchFragment">
+    app:startDestination="@+id/landingFragment">
 
     <fragment
         android:id="@+id/logFragment"
@@ -29,22 +29,7 @@
         android:label="@string/title_setting"
         tools:layout="@layout/fragment_setting" />
 
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="com.avc.advanager.MainActivity"
-        android:label="MainActivity"
-        tools:layout="@layout/activity_main"/>
-    <fragment
-        android:id="@+id/deviceSearchFragment"
-        android:name="com.avc.advanager.fragment.search.DeviceSearchFragment"
-        android:label="DeviceSearchFragment"
-        tools:layout="@layout/fragment_device_search"/>
 
-    <action
-        android:id="@+id/navigate_to_deviceSearchFragment"
-        app:destination="@id/deviceSearchFragment"
-        app:popUpTo="@id/navigation"
-        app:popUpToInclusive="true" />
     <action android:id="@+id/navigate_to_logFragment" app:destination="@id/logFragment"
         app:popUpTo="@id/navigation" app:popUpToInclusive="true"/>
     <action android:id="@+id/navigate_to_streamFragment" app:destination="@id/streamFragment"
@@ -54,19 +39,36 @@
     <action android:id="@+id/navigate_to_settingFragment" app:destination="@id/settingFragment"
         app:popUpTo="@id/navigation" app:popUpToInclusive="true"/>
 
-    <dialog
-        android:id="@+id/deviceRegisterDialog"
-        android:name="com.avc.advanager.fragment.register.DeviceRegisterDialog"
-        android:label="DeviceRegisterDialog"
-        tools:layout="@layout/dialog_register"/>
-    <dialog
-        android:id="@+id/deviceLoginDialog"
-        android:name="com.avc.advanager.fragment.login.DeviceLoginDialog"
-        android:label="DeviceLoginDialog"
-        tools:layout="@layout/dialog_login"/>
+    <action
+        android:id="@+id/navigate_to_deviceSearchFragment" app:destination="@id/deviceSearchFragment"
+        app:popUpTo="@id/navigation" app:popUpToInclusive="true" />
     <fragment
-        android:id="@+id/settingFragment"
-        android:name="com.avc.advanager.ui.setting.SettingFragment"
-        android:label="fragment_setting"
-        tools:layout="@layout/fragment_setting" />
+        android:id="@+id/deviceSearchFragment"
+        android:name="com.avc.advanager.fragment.search.DeviceSearchFragment"
+        android:label="DeviceSearchFragment"
+        tools:layout="@layout/fragment_device_search"/>
+
+    <action
+        android:id="@+id/navigate_to_deviceRegisterFragment" app:destination="@id/deviceRegisterFragment"
+        app:popUpTo="@id/navigation" app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/deviceRegisterFragment"
+        android:name="com.avc.advanager.fragment.register.DeviceRegisterFragment"
+        android:label="DeviceRegisterFragment"
+        tools:layout="@layout/fragment_register"/>
+
+    <action
+        android:id="@+id/navigate_to_deviceLoginFragment" app:destination="@id/deviceLoginFragment"
+        app:popUpTo="@id/navigation" app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/deviceLoginFragment"
+        android:name="com.avc.advanager.fragment.login.DeviceLoginFragment"
+        android:label="DeviceLoginFragment"
+        tools:layout="@layout/fragment_login"/>
+
+    <fragment
+        android:id="@+id/landingFragment"
+        android:name="com.avc.advanager.fragment.landing.LandingFragment"
+        android:label="LogoFragment"
+        tools:layout="@layout/fragment_landing"/>
 </navigation>

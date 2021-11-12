@@ -5,8 +5,9 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.avc.advanager.data.Device
 import com.avc.advanager.fragment.search.IPAdapter
-import com.avc.advanager.source.LoadStatus
+import com.avc.advanager.data.source.LoadStatus
 import com.avc.advanager.util.CurrentFragmentType
 
 
@@ -36,24 +37,13 @@ fun bindToolbarVisibility(view: View, fragment: CurrentFragmentType) {
 
 //Device Search Fragment
 @BindingAdapter("ipItems")
-fun bindRecyclerViewWithIPItems(recyclerView: RecyclerView, ipItems: List<String>?) {
+fun bindRecyclerViewWithIPItems(recyclerView: RecyclerView, ipItems: List<Device>?) {
     ipItems?.let {
         recyclerView.adapter?.apply {
             when (this) {
                 is IPAdapter -> submitList(it)
             }
         }
-    }
-}
-
-/**
- * Decide the visibility of [ProgressBar] according to [LoadStatus]
- */
-@BindingAdapter("setupApiStatus")
-fun bindApiStatus(view: ProgressBar, status: LoadStatus?) {
-    when (status) {
-        LoadStatus.LOADING -> view.visibility = View.VISIBLE
-        LoadStatus.DONE, LoadStatus.ERROR -> view.visibility = View.GONE
     }
 }
 

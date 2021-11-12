@@ -9,7 +9,7 @@ import com.avc.advanager.R
 import com.avc.advanager.data.Result
 import com.avc.advanager.data.Token
 import com.avc.advanager.fragment.DeviceManager
-import com.avc.advanager.source.AdvanagerRepository
+import com.avc.advanager.data.source.AdvanagerRepository
 import com.avc.advanager.util.Util
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,39 +31,39 @@ class SettingViewModel (private val repository: AdvanagerRepository): ViewModel(
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     fun logout() {
-        Toast.makeText(
-            AdvanagerApplication.appContext,
-            "Logout!",
-            Toast.LENGTH_SHORT
-        ).show()
-        coroutineScope.launch {
-            if (!Util.isWifiEnabled()) {
-                Toast.makeText(
-                    AdvanagerApplication.appContext,
-                    Util.getString(R.string.wifi_warning),
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
-                DeviceManager.deviceToken?.let {
-                    val result = repository.postUserLogout(Token(it))
-                    when (result) {
-                        is Result.Success -> {
-                            result.data
-                            navigateToDeviceSearch()
-                        }
-                        is Result.Fail -> {
-                            null
-                        }
-                        is Result.Error -> {
-                            null
-                        }
-                        else -> {
-                            null
-                        }
-                    }
-                }
-            }
-        }
+//        Toast.makeText(
+//            AdvanagerApplication.appContext,
+//            "Logout!",
+//            Toast.LENGTH_SHORT
+//        ).show()
+//        coroutineScope.launch {
+//            if (!Util.isWifiEnabled()) {
+//                Toast.makeText(
+//                    AdvanagerApplication.appContext,
+//                    Util.getString(R.string.wifi_warning),
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//            } else {
+//                DeviceManager.deviceToken?.let {
+//                    val result = repository.postUserLogout(Token(it))
+//                    when (result) {
+//                        is Result.Success -> {
+//                            result.data
+//                            navigateToDeviceSearch()
+//                        }
+//                        is Result.Fail -> {
+//                            null
+//                        }
+//                        is Result.Error -> {
+//                            null
+//                        }
+//                        else -> {
+//                            null
+//                        }
+//                    }
+//                }
+//            }
+//        }
     }
 
     private val _navigateToDeviceSearch = MutableLiveData<Boolean>()
@@ -73,11 +73,11 @@ class SettingViewModel (private val repository: AdvanagerRepository): ViewModel(
 
     private fun navigateToDeviceSearch() {
         _navigateToDeviceSearch.value = true
-        Toast.makeText(
-            AdvanagerApplication.appContext,
-            "Logout success!",
-            Toast.LENGTH_SHORT
-        ).show()
+//        Toast.makeText(
+//            AdvanagerApplication.appContext,
+//            "Logout success!",
+//            Toast.LENGTH_SHORT
+//        ).show()
     }
 
     private fun emptyLoginInfo() {
@@ -88,6 +88,6 @@ class SettingViewModel (private val repository: AdvanagerRepository): ViewModel(
 
     fun onSucceeded() {
         emptyLoginInfo()
-        _navigateToDeviceSearch.value = null
+//        _navigateToDeviceSearch.value = null
     }
 }
