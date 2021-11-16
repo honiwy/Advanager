@@ -23,7 +23,7 @@ data class Device(
 
     companion object {
 
-        fun convertRemoteIPToLocalDeviceInfo(ip: String): Device {
+        fun convertRemoteIPToLocalDevice(ip: String): Device {
             return Device(
                 ip = ip,
                 account =  "",

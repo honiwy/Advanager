@@ -2,16 +2,13 @@ package com.avc.advanager
 
 import android.app.Application
 import android.content.Context
-import com.avc.advanager.di.AppComponent
-import com.avc.advanager.di.DaggerAppComponent
-import timber.log.Timber
-import kotlin.properties.Delegates
+import com.avc.advanager.data.source.AdvanagerRepository
+import com.avc.advanager.util.ServiceLocator
 
 class AdvanagerApplication : Application() {
 
-    val appComponent: AppComponent by lazy {
-        DaggerAppComponent.factory().create(applicationContext)
-    }
+    val advanagerRepository: AdvanagerRepository
+        get() = ServiceLocator.provideTasksRepository()
 
     companion object {
         lateinit var appContext: Context
@@ -19,7 +16,6 @@ class AdvanagerApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        Timber.plant(Timber.DebugTree())
         appContext = applicationContext
     }
 }

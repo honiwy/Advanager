@@ -11,10 +11,4 @@ data class RegisterInfo(
     override var account: String,
 
     override var password: String
-) : AccountInfo(account, password) {
-    companion object {
-        const val ADMINSTRATOR = 0
-        const val GUEST = 1
-        const val SUPER_ADMINSTRATOR = 99
-    }
-}
+) : AccountInfo(account, password)

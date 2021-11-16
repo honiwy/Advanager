@@ -6,14 +6,15 @@
 
         <variable
             name="viewModel"
-            type="com.avc.advanager.fragment.register.DeviceRegisterViewModel" />
+            type="com.avc.advanager.ui.register.DeviceRegisterViewModel" />
 
         <import type="android.view.View" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_background_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/dark_blue">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint_layout"
@@ -204,7 +205,26 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/button_close"
                 app:layout_constraintTop_toBottomOf="@+id/text_repeated_password_error" />
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="gone"
+                app:setupStatus="@{viewModel.loadingStatus}" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:setupErrorMessage="@{viewModel.error}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -5,15 +5,14 @@ import androidx.lifecycle.LiveData
 import com.avc.advanager.data.*
 import com.avc.advanager.data.source.local.LocalDataSource
 import com.avc.advanager.data.source.remote.RemoteDataSource
-import com.avc.advanager.response.DeviceInitialResponse
-import com.avc.advanager.response.LoginUserResponse
-import com.avc.advanager.response.RegisterUserResponse
+import com.avc.advanager.data.response.DeviceInitialResponse
+import com.avc.advanager.data.response.LoginUserResponse
+import com.avc.advanager.data.response.RegisterUserResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import retrofit2.Response
-import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 
@@ -27,7 +26,7 @@ class DefaultAdvanagerRepository @Inject constructor(
         try {
             updateDevicesFromRemoteDataSource()
         } catch (ex: Exception) {
-            Timber.e(ex)
+            Log.e("DefaultAdvanagerRepository", ex.toString())
         }
     }
 
@@ -52,7 +51,7 @@ class DefaultAdvanagerRepository @Inject constructor(
                 is Result.Success -> {
                     val deviceList: List<Device> =
                         result.data.map { ip ->
-                            Device.convertRemoteIPToLocalDeviceInfo(ip)
+                            Device.convertRemoteIPToLocalDevice(ip)
                         }
                     localDataSource.insertDevices(deviceList)
                 }

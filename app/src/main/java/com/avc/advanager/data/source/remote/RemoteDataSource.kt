@@ -1,8 +1,8 @@
 package com.avc.advanager.data.source.remote
 import com.avc.advanager.data.*
-import com.avc.advanager.response.DeviceInitialResponse
-import com.avc.advanager.response.LoginUserResponse
-import com.avc.advanager.response.RegisterUserResponse
+import com.avc.advanager.data.response.DeviceInitialResponse
+import com.avc.advanager.data.response.LoginUserResponse
+import com.avc.advanager.data.response.RegisterUserResponse
 import retrofit2.Response
 
 

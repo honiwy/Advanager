@@ -5,46 +5,12 @@
     android:id="@+id/navigation"
     app:startDestination="@+id/landingFragment">
 
-    <fragment
-        android:id="@+id/logFragment"
-        android:name="com.avc.advanager.ui.log.LogFragment"
-        android:label="@string/title_log"
-        tools:layout="@layout/fragment_log" />
-
-    <fragment
-        android:id="@+id/streamFragment"
-        android:name="com.avc.advanager.ui.stream.StreamFragment"
-        android:label="@string/title_stream"
-        tools:layout="@layout/fragment_stream" />
-
-    <fragment
-        android:id="@+id/notificationsFragment"
-        android:name="com.avc.advanager.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
-
-    <fragment
-        android:id="@+id/settingFragment"
-        android:name="com.avc.advanager.ui.setting.SettingFragment"
-        android:label="@string/title_setting"
-        tools:layout="@layout/fragment_setting" />
-
-
-    <action android:id="@+id/navigate_to_logFragment" app:destination="@id/logFragment"
-        app:popUpTo="@id/navigation" app:popUpToInclusive="true"/>
-    <action android:id="@+id/navigate_to_streamFragment" app:destination="@id/streamFragment"
-        app:popUpTo="@id/navigation" app:popUpToInclusive="true"/>
-    <action android:id="@+id/navigate_to_notificationsFragment" app:destination="@id/notificationsFragment"
-        app:popUpTo="@id/navigation" app:popUpToInclusive="true"/>
-    <action android:id="@+id/navigate_to_settingFragment" app:destination="@id/settingFragment"
-        app:popUpTo="@id/navigation" app:popUpToInclusive="true"/>
-
     <action
         android:id="@+id/navigate_to_deviceSearchFragment" app:destination="@id/deviceSearchFragment"
         app:popUpTo="@id/navigation" app:popUpToInclusive="true" />
     <fragment
         android:id="@+id/deviceSearchFragment"
-        android:name="com.avc.advanager.fragment.search.DeviceSearchFragment"
+        android:name="com.avc.advanager.ui.search.DeviceSearchFragment"
         android:label="DeviceSearchFragment"
         tools:layout="@layout/fragment_device_search"/>
 
@@ -53,7 +19,7 @@
         app:popUpTo="@id/navigation" app:popUpToInclusive="true" />
     <fragment
         android:id="@+id/deviceRegisterFragment"
-        android:name="com.avc.advanager.fragment.register.DeviceRegisterFragment"
+        android:name="com.avc.advanager.ui.register.DeviceRegisterFragment"
         android:label="DeviceRegisterFragment"
         tools:layout="@layout/fragment_register"/>
 
@@ -62,13 +28,22 @@
         app:popUpTo="@id/navigation" app:popUpToInclusive="true" />
     <fragment
         android:id="@+id/deviceLoginFragment"
-        android:name="com.avc.advanager.fragment.login.DeviceLoginFragment"
+        android:name="com.avc.advanager.ui.login.DeviceLoginFragment"
         android:label="DeviceLoginFragment"
         tools:layout="@layout/fragment_login"/>
 
     <fragment
         android:id="@+id/landingFragment"
-        android:name="com.avc.advanager.fragment.landing.LandingFragment"
+        android:name="com.avc.advanager.ui.landing.LandingFragment"
         android:label="LogoFragment"
         tools:layout="@layout/fragment_landing"/>
+
+    <action
+        android:id="@+id/navigate_to_dashboardFragment" app:destination="@id/dashboardFragment"
+        app:popUpTo="@id/navigation" app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.avc.advanager.ui.dashboard.DashboardFragment"
+        android:label="DashboardFragment"
+        tools:layout="@layout/fragment_dashboard"/>
 </navigation>
