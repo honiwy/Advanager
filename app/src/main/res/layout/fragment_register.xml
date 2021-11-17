@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.avc.advanager.ui.register.DeviceRegisterViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_background_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dark_blue">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/round_recycler"
+            android:elevation="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/button_close"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/close"
+                android:backgroundTint="@color/dark_blue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_register_ip_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="IP: "
+                android:textColor="@color/dark_blue"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_register_ip_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textColor="@color/dark_blue"
+                android:text="@{viewModel.selectedIP}"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/text_register_ip_title"
+                app:layout_constraintStart_toEndOf="@+id/text_register_ip_title"
+                app:layout_constraintTop_toTopOf="@+id/text_register_ip_title" />
+
+            <TextView
+                android:id="@+id/text_register_permission_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Permission"
+                android:textColor="@color/dark_blue"
+                android:textSize="20dp"
+                app:layout_constraintStart_toStartOf="@+id/text_register_ip_title"
+                app:layout_constraintTop_toBottomOf="@+id/text_register_ip_title" />
+
+            <EditText
+                android:id="@+id/edit_text_register_permission_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:ems="10"
+                android:focusable="false"
+                android:inputType="none"
+                android:minHeight="48dp"
+                android:text="Administrator"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_register_permission_title" />
+
+            <TextView
+                android:id="@+id/text_register_account_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Account"
+                android:textColor="@color/dark_blue"
+                android:textSize="20dp"
+                app:layout_constraintStart_toStartOf="@+id/text_register_ip_title"
+                app:layout_constraintTop_toBottomOf="@+id/edit_text_register_permission_content" />
+
+            <EditText
+                android:id="@+id/edit_text_register_account_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:hint="admin"
+                android:singleLine="true"
+                android:minHeight="48dp"
+                android:text="@={viewModel.account}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_register_account_title" />
+
+            <TextView
+                android:id="@+id/text_register_password_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Password"
+                android:textColor="@color/dark_blue"
+                android:textSize="20dp"
+                app:layout_constraintStart_toStartOf="@+id/text_register_ip_title"
+                app:layout_constraintTop_toBottomOf="@+id/edit_text_register_account_content" />
+
+            <EditText
+                android:id="@+id/edit_text_register_password_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:singleLine="true"
+                android:hint="P@$$w0rD"
+                android:minHeight="48dp"
+                android:text="@={viewModel.password}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_register_password_title" />
+
+            <TextView
+                android:id="@+id/text_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="false"
+                android:textColor="@color/dark_red"
+                android:textSize="10dp"
+                app:layout_constraintStart_toStartOf="@+id/text_register_ip_title"
+                app:layout_constraintTop_toBottomOf="@+id/edit_text_register_password_content"
+                app:setupErrorMessage="@{viewModel.passwordError}" />
+
+            <TextView
+                android:id="@+id/text_register_repeat_password_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Confirm Password"
+                android:textColor="@color/dark_blue"
+                android:textSize="20dp"
+                app:layout_constraintStart_toStartOf="@+id/text_register_ip_title"
+                app:layout_constraintTop_toBottomOf="@+id/text_error" />
+
+            <EditText
+                android:id="@+id/edit_text_repeat_register_password_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:singleLine="true"
+                android:hint="P@$$w0rD"
+                android:minHeight="48dp"
+                android:text="@={viewModel.repeatedPassword}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_register_repeat_password_title" />
+
+            <TextView
+                android:id="@+id/text_repeated_password_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="false"
+                android:textColor="@color/dark_red"
+                android:textSize="10dp"
+                app:layout_constraintStart_toStartOf="@+id/text_register_ip_title"
+                app:layout_constraintTop_toBottomOf="@+id/edit_text_repeat_register_password_content"
+                app:setupErrorMessage="@{viewModel.repeatedPasswordError}" />
+
+
+            <Button
+                android:id="@+id/button_register_ip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:enabled="@{!(viewModel.repeatedPassword.empty||viewModel.password.empty||viewModel.account.empty||!viewModel.registerButtonEnabled)}"
+                android:text="Register"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/button_close"
+                app:layout_constraintTop_toBottomOf="@+id/text_repeated_password_error" />
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="gone"
+                app:setupStatus="@{viewModel.loadingStatus}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:setupErrorMessage="@{viewModel.error}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

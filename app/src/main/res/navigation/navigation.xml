@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@+id/landingFragment">
+
+    <action
+        android:id="@+id/navigate_to_deviceSearchFragment" app:destination="@id/deviceSearchFragment"
+        app:popUpTo="@id/navigation" app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/deviceSearchFragment"
+        android:name="com.avc.advanager.ui.search.DeviceSearchFragment"
+        android:label="DeviceSearchFragment"
+        tools:layout="@layout/fragment_device_search"/>
+
+    <action
+        android:id="@+id/navigate_to_deviceRegisterFragment" app:destination="@id/deviceRegisterFragment"
+        app:popUpTo="@id/navigation" app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/deviceRegisterFragment"
+        android:name="com.avc.advanager.ui.register.DeviceRegisterFragment"
+        android:label="DeviceRegisterFragment"
+        tools:layout="@layout/fragment_register"/>
+
+    <action
+        android:id="@+id/navigate_to_deviceLoginFragment" app:destination="@id/deviceLoginFragment"
+        app:popUpTo="@id/navigation" app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/deviceLoginFragment"
+        android:name="com.avc.advanager.ui.login.DeviceLoginFragment"
+        android:label="DeviceLoginFragment"
+        tools:layout="@layout/fragment_login"/>
+
+    <fragment
+        android:id="@+id/landingFragment"
+        android:name="com.avc.advanager.ui.landing.LandingFragment"
+        android:label="LogoFragment"
+        tools:layout="@layout/fragment_landing"/>
+
+    <action
+        android:id="@+id/navigate_to_dashboardFragment" app:destination="@id/dashboardFragment"
+        app:popUpTo="@id/navigation" app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.avc.advanager.ui.dashboard.DashboardFragment"
+        android:label="DashboardFragment"
+        tools:layout="@layout/fragment_dashboard"/>
+</navigation>
